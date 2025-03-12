@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
     private Vector3 moveInput;
 
     private float up = 1;
-    public float jump = 500000f;
+    public float jump = 5f;
 
     private bool grounded=false;
     private bool climbable = false;
@@ -23,7 +23,6 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         tf = GetComponent<Transform>();
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
     }
 
     void Update()
