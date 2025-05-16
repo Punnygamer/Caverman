@@ -16,13 +16,13 @@ public class LAMP : MonoBehaviour
     private float maxlevel = 1f;
     private float distance;
     private float currentd;
-    public float[] checkdistances = new float[] { 2f, 4f, 6f, 8f, 10f, 1000000f };
+    public float[] checkdistances = new float[] { 6f, 6f, 12f, 20f, 20f, 1000000f };
 
     void Start()
     {
         POI = GameObject.FindGameObjectsWithTag("pointofinterest");
         List<GameObject> POIlist = new List<GameObject>(POI);
-        try { end = GameObject.FindGameObjectWithTag("end"); }
+        try { end = GameObject.FindGameObjectWithTag("Finish"); }
         catch (Exception e) { Debug.Log("no end"); }
         if (end != null)
         {
@@ -40,7 +40,7 @@ public class LAMP : MonoBehaviour
 
     void Update()
     {
-        distance = 1000000f;
+        distance = 10000000000f;
         //Debug.Log(POItransform);
         foreach (Transform tf in POItransform)
         {

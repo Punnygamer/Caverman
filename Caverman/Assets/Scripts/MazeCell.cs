@@ -47,7 +47,7 @@ public class MazeCell : MonoBehaviour
         {
             HasEntropy = true;
             Entropy.SetActive(true);
-            Debug.Log($"Entropy added to {gameObject.name}");
+            //Debug.Log($"Entropy added to {gameObject.name}");
         }
     }
 

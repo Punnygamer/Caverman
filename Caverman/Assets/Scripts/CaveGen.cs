@@ -93,7 +93,7 @@ public class CaveGen : MonoBehaviour
         {
             int dx = b.gridX - a.gridX;
             int dz = b.gridZ - a.gridZ;
-            Debug.Log($"Clearing walls between ({a.gridX},{a.gridZ}) and ({b.gridX},{b.gridZ})");
+            //Debug.Log($"Clearing walls between ({a.gridX},{a.gridZ}) and ({b.gridX},{b.gridZ})");
             if (dx == 1) // b is to the right of a
             {
                 a.ClearRight();
@@ -150,7 +150,7 @@ public class CaveGen : MonoBehaviour
             eligibleCells[i].GainEntropy();
         }
 
-        Debug.Log($"{count} entropy cells added.");
+        //Debug.Log($"{count} entropy cells added.");
     }
 }
 
