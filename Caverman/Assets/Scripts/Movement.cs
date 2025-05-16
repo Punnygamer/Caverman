@@ -61,12 +61,12 @@ public class Movement : MonoBehaviour
             if (Input.GetKey(KeyCode.Space) && climbable) 
             {
                 moveInput = new Vector3(moveDirection.x, up, moveDirection.z);
-                rb.linearVelocity= new Vector3(moveInput.x * speed/2, moveInput.y * speed/2, moveInput.z * speed/2);
+                rb.linearVelocity= new Vector3(moveInput.x * speed, moveInput.y * speed/2, moveInput.z * speed/2);
             }
             else
             {
                 moveInput = new Vector3(moveDirection.x, up, moveDirection.z);
-                rb.linearVelocity = new Vector3(moveInput.x * speed/2, rb.linearVelocity.y, moveInput.z * speed/2);
+                rb.linearVelocity = new Vector3(moveInput.x * speed, rb.linearVelocity.y, moveInput.z * speed/2);
             }
         }
         //    
