@@ -1,4 +1,8 @@
 using UnityEngine;
+
+
+
+
 public class MazeCell : MonoBehaviour
 {
     [SerializeField]
@@ -33,7 +37,7 @@ public class MazeCell : MonoBehaviour
         {
             HasEntropy = true;
             Entropy.SetActive(true);
-            //Debug.Log($"Entropy added to {gameObject.name}");
+            
         }
     }
 
@@ -47,27 +51,6 @@ public class MazeCell : MonoBehaviour
         
         HasEndwall = true;
         Endwall.SetActive(true);
-    }
-
-    //clear the walls
-    public void Clearwall(int wall)
-    {
-        if (wall == 1)
-        {
-            Leftwall.SetActive(false);
-        }
-        else if (wall == 2)
-        {
-            Rightwall.SetActive(false);
-        }
-        else if (wall == 3)
-        {
-            Northwall.SetActive(false);
-        }
-        else if (wall == 4)
-        {
-            Southwall.SetActive(false);
-        }
     }
     public void ClearNorth() { Northwall.SetActive(false); }
     public void ClearSouth() { Southwall.SetActive(false); }

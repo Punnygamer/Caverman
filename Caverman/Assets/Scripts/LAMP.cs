@@ -48,17 +48,6 @@ public class LAMP : MonoBehaviour
             currentd = Vector3.Distance(tf.position, playertransform.position);
             if (currentd < distance) { distance = currentd; }
         }
-        //float level = levels[checkdistances.Length - 1];
-        /*
-        for (int i = checkdistances.Length - 1; i >= 0; i--)
-        {
-            
-            if (checkdistances[i] >= distance)
-            {
-                level = levels[i];
-            }
-        }
-        lamplight.intensity=level;*/
         if (checkdistances[0] >= distance)
         {
             lamplight.intensity = maxlevel;
