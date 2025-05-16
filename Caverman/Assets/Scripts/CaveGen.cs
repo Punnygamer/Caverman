@@ -12,6 +12,7 @@ public class CaveGen : MonoBehaviour
     private MazeCell finalcell;
     [SerializeField] private GameObject playerpfab;
     [SerializeField] private int EntropyNum = 5;
+    
 
     private MazeCell[,] cavegrid;
 
@@ -21,7 +22,11 @@ public class CaveGen : MonoBehaviour
         GenerateMaze(null, cavegrid[0, 0]);
         finalcell.GainEndwall();
         AddEntropy();
+        MazeCell randomStart = cavegrid[Random.Range(0, xsize), Random.Range(0, zsize)];
+        Vector3 spawnPos = randomStart.transform.position + Vector3.up * 1f;
+        Instantiate(playerpfab, spawnPos, Quaternion.identity);
     }
+    
 
     void GenerateGrid()
     {
