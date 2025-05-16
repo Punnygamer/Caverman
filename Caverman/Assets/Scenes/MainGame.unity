@@ -426,7 +426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1885666774971062561, guid: c477a99caf1b79247a5f68160d5853e6, type: 3}
       propertyPath: EntropyNum
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1953554780349728386, guid: c477a99caf1b79247a5f68160d5853e6, type: 3}
       propertyPath: m_Name

@@ -9,7 +9,6 @@ public class Isgrounded : MonoBehaviour
         if (other.CompareTag("Floor") || other.CompareTag("climbable")) 
         {
             grounded = true;
-            Debug.Log("Player is grounded.");
         }
     }
 
@@ -19,7 +18,7 @@ public class Isgrounded : MonoBehaviour
         if (other.CompareTag("Floor") || other.CompareTag("climbable"))
         {
             grounded = false;
-            Debug.Log("Player is not grounded.");
+            
         }
     }
     public bool getGrounded()
