@@ -1,0 +1,151 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CaveGen : MonoBehaviour
+{
+    [SerializeField]
+    private MazeCell Cavecells;
+
+    public int xsize;
+    public int zsize;
+    public float cellsize = 1f;
+    private MazeCell finalcell;
+    [SerializeField] private GameObject playerpfab;
+    [SerializeField] private int EntropyNum = 5;
+
+    private MazeCell[,] cavegrid;
+
+    void Start()
+    {
+        GenerateGrid();
+        GenerateMaze(null, cavegrid[0, 0]);
+        finalcell.GainEndwall();
+        AddEntropy();
+    }
+
+    void GenerateGrid()
+    {
+        cavegrid = new MazeCell[xsize, zsize];
+
+        for (int x = 0; x < xsize; x++)
+        {
+            for (int z = 0; z < zsize; z++)
+            {
+                    Vector3 pos = new Vector3(x * cellsize, 0, z * cellsize);
+                    MazeCell newCell = Instantiate(Cavecells, pos, Quaternion.identity);
+                    newCell.gridX = x;
+                    newCell.gridZ = z;
+                    newCell.name = $"Cell_{x}_{z}";
+                    cavegrid[x, z] = newCell;
+            }
+        }
+    }
+
+        void GenerateMaze(MazeCell previous, MazeCell current)
+        {
+            current.Visit();
+            finalcell=current;
+            if (previous != null)
+                ClearWallsBetween(previous, current);
+
+            MazeCell next;
+            do
+            {
+                next = GetRandomUnvisitedNeighbor(current);
+                if (next != null)
+                {
+                    GenerateMaze(current, next);
+                }
+            } while (next != null);
+        }
+
+        MazeCell GetRandomUnvisitedNeighbor(MazeCell cell)
+        {
+            var unvisited = GetUnvisitedNeighbors(cell);
+            if (unvisited.Count == 0) return null;
+            return unvisited[Random.Range(0, unvisited.Count)];
+        }
+
+        List<MazeCell> GetUnvisitedNeighbors(MazeCell cell)
+        {
+            List<MazeCell> neighbors = new List<MazeCell>();
+            int x = cell.gridX;
+            int z = cell.gridZ;
+
+            if (x > 0 && !cavegrid[x - 1, z].Visited)
+                neighbors.Add(cavegrid[x - 1, z]);
+            if (x < xsize - 1 && !cavegrid[x + 1, z].Visited)
+                neighbors.Add(cavegrid[x + 1, z]);
+            if (z > 0 && !cavegrid[x, z - 1].Visited)
+                neighbors.Add(cavegrid[x, z - 1]);
+            if (z < zsize - 1 && !cavegrid[x, z + 1].Visited)
+                neighbors.Add(cavegrid[x, z + 1]);
+
+            return neighbors;
+        }
+
+        void ClearWallsBetween(MazeCell a, MazeCell b)
+        {
+            int dx = b.gridX - a.gridX;
+            int dz = b.gridZ - a.gridZ;
+            Debug.Log($"Clearing walls between ({a.gridX},{a.gridZ}) and ({b.gridX},{b.gridZ})");
+            if (dx == 1) // b is to the right of a
+            {
+                a.ClearRight();
+                b.ClearLeft();
+            }
+            else if (dx == -1) // b is to the left of a
+            {
+                a.ClearLeft();
+                b.ClearRight();
+            }
+            else if (dz == 1) // b is above a
+            {
+                b.ClearNorth();
+                a.ClearSouth();
+            }
+            else if (dz == -1) // b is below a
+            {
+                b.ClearSouth();
+                a.ClearNorth();
+            }
+            else
+            {
+                Debug.LogWarning("Tried to clear walls between non-adjacent cells!");
+            }
+        }
+
+    void AddEntropy()
+    {
+        List<MazeCell> eligibleCells = new List<MazeCell>();
+
+        for (int x = 0; x < xsize; x++)
+        {
+            for (int z = 0; z < zsize; z++)
+            {
+                MazeCell cell = cavegrid[x, z];
+                if (!cell.HasEntropy && !cell.HasEndwall && cell.Visited)
+                {
+                    eligibleCells.Add(cell);
+                }
+            }
+        }
+
+        int count = Mathf.Min(EntropyNum, eligibleCells.Count);
+
+        for (int i = 0; i < count; i++)
+        {
+            int randomIndex = Random.Range(i, eligibleCells.Count);
+
+            // Swap for Fisher–Yates shuffle
+            MazeCell temp = eligibleCells[i];
+            eligibleCells[i] = eligibleCells[randomIndex];
+            eligibleCells[randomIndex] = temp;
+
+            eligibleCells[i].GainEntropy();
+        }
+
+        Debug.Log($"{count} entropy cells added.");
+    }
+}
+

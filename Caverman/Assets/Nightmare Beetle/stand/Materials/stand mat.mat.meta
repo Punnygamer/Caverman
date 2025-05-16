@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3abbadb8ed40eb644bd8f113517c8cdb
+timeCreated: 1494827934
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90571
+  packageName: A nightmare beetle
+  packageVersion: 1.0
+  assetPath: Assets/Nightmare Beetle/stand/Materials/stand mat.mat
+  uploadId: 179957
