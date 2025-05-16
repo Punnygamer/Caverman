@@ -1,6 +1,6 @@
 using UnityEngine;
 
-
+//based on ketra games with the entropy and end wall being mine https://www.youtube.com/watch?v=_aeYq5BmDMg&t=112s
 
 
 public class MazeCell : MonoBehaviour

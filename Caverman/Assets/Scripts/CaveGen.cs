@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//based on ketra games with the entropy and end wall, spawning being mine. https://www.youtube.com/watch?v=_aeYq5BmDMg&t=112s
 
 
 
@@ -144,15 +145,28 @@ public class CaveGen : MonoBehaviour
         }
 
         int count = Mathf.Min(EntropyNum, eligibleCells.Count);
+        int[] usedIndexes = new int[EntropyNum];
+        int added = 0;
 
-        for (int i = 0; i < count; i++)
+        while (added < EntropyNum)
         {
-            int randomIndex = Random.Range(i, eligibleCells.Count);
-            MazeCell temp = eligibleCells[i];
-            eligibleCells[i] = eligibleCells[randomIndex];
-            eligibleCells[randomIndex] = temp;
+            int index = Random.Range(0, eligibleCells.Count);
+            bool alreadyUsed = false;
 
-            eligibleCells[i].GainEntropy();
+            for (int i = 0; i < added; i++)
+            {
+                if (usedIndexes[i] == index)
+                {
+                    alreadyUsed = true;
+                    break;
+                }
+            }
+            if (alreadyUsed == false)
+            {
+                usedIndexes[added] = index;
+                eligibleCells[index].GainEntropy();
+                added++;
+            }
         }
 
     }
