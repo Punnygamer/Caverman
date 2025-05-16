@@ -23,7 +23,7 @@ public class CaveGen : MonoBehaviour
         finalcell.GainEndwall();
         AddEntropy();
         MazeCell randomStart = cavegrid[Random.Range(0, xsize), Random.Range(0, zsize)];
-        Vector3 spawnPos = randomStart.transform.position + Vector3.up * 1f;
+        Vector3 spawnPos = randomStart.transform.position + Vector3.up * 3f;
         Instantiate(playerpfab, spawnPos, Quaternion.identity);
     }
     

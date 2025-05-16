@@ -1,17 +1,17 @@
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class End : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private Collider door;
-    private string win = "win";
-    private void OnTriggerEnter(Collider other)
+    
+    
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.CompareTag("Finish"))
         {
-            Debug.Log(win);
-            //SceneManager.LoadScene(win);
+            Debug.Log("win");
+            SceneManager.LoadScene(2);
         }
     }
 }
