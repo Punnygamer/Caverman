@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
     private double health;
     private int maxhealth = 6;
     private bool hurting;
-    private double damage=1;
+    private double damage=2;
     private double healing=0.25;
     public int timelimit;
     private double counter = 1;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CaveGen : MonoBehaviour
 {
     [SerializeField]
@@ -89,34 +90,30 @@ public class CaveGen : MonoBehaviour
             return neighbors;
         }
 
-        void ClearWallsBetween(MazeCell a, MazeCell b)
+        void ClearWallsBetween(MazeCell beforecell, MazeCell currentcell)
         {
-            int dx = b.gridX - a.gridX;
-            int dz = b.gridZ - a.gridZ;
-            //Debug.Log($"Clearing walls between ({a.gridX},{a.gridZ}) and ({b.gridX},{b.gridZ})");
-            if (dx == 1) // b is to the right of a
+            int dx = currentcell.gridX - beforecell.gridX;
+            int dz = currentcell.gridZ - beforecell.gridZ;
+            
+            if (dx == 1)//current to the right
             {
-                a.ClearRight();
-                b.ClearLeft();
+                beforecell.ClearRight();
+                currentcell.ClearLeft();
             }
-            else if (dx == -1) // b is to the left of a
+            else if (dx == -1) //current to the left
             {
-                a.ClearLeft();
-                b.ClearRight();
+                beforecell.ClearLeft();
+                currentcell.ClearRight();
             }
-            else if (dz == 1) // b is above a
+            else if (dz == 1) //current above
             {
-                b.ClearNorth();
-                a.ClearSouth();
+                currentcell.ClearNorth();
+                beforecell.ClearSouth();
             }
-            else if (dz == -1) // b is below a
+            else if (dz == -1) //current bellow
             {
-                b.ClearSouth();
-                a.ClearNorth();
-            }
-            else
-            {
-                Debug.LogWarning("Tried to clear walls between non-adjacent cells!");
+                currentcell.ClearSouth();
+                beforecell.ClearNorth();
             }
         }
 
@@ -141,8 +138,6 @@ public class CaveGen : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int randomIndex = Random.Range(i, eligibleCells.Count);
-
-            // Swap for Fisher–Yates shuffle
             MazeCell temp = eligibleCells[i];
             eligibleCells[i] = eligibleCells[randomIndex];
             eligibleCells[randomIndex] = temp;
@@ -150,7 +145,6 @@ public class CaveGen : MonoBehaviour
             eligibleCells[i].GainEntropy();
         }
 
-        //Debug.Log($"{count} entropy cells added.");
     }
 }
 

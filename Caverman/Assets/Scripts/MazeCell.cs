@@ -3,37 +3,23 @@ public class MazeCell : MonoBehaviour
 {
     [SerializeField]
     private GameObject Leftwall;
-
     [SerializeField]
     private GameObject Rightwall;
-
     [SerializeField]
     private GameObject Northwall;
-
     [SerializeField]
     private GameObject Southwall;
-
     [SerializeField]
     private GameObject Entropy;
-
     [SerializeField]
     private GameObject Endwall;
-
     [SerializeField]
     private GameObject Unvisted;
-
     public bool Visited = false;
     public bool HasEntropy = false;
     public bool HasEndwall = false;
-
     public int gridX;
     public int gridZ;
-
-    void Start()
-    {
-        //Entropy.SetActive(false);
-        //Endwall.SetActive(false);
-    }
 
     public void Visit()
     {
