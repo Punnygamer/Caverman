@@ -47,45 +47,53 @@ public class CaveGen : MonoBehaviour
         }
     }
 
-        void GenerateMaze(MazeCell previous, MazeCell current)
-        {
-            current.Visit();
-            finalcell=current;
-            if (previous != null)
-                ClearWallsBetween(previous, current);
+    void GenerateMaze(MazeCell previous, MazeCell current)
+    {
+        current.Visit();
+        finalcell=current;
+        if (previous != null)
+        ClearWallsBetween(previous, current);
 
-            MazeCell next;
-            do
+        MazeCell next;
+        do
+        {
+            next = GetRandomUnvisitedNeighbor(current);
+            if (next != null)
             {
-                next = GetRandomUnvisitedNeighbor(current);
-                if (next != null)
-                {
-                    GenerateMaze(current, next);
-                }
-            } while (next != null);
+                GenerateMaze(current, next);
+            }
+            }while(next != null);
         }
 
-        MazeCell GetRandomUnvisitedNeighbor(MazeCell cell)
+    MazeCell GetRandomUnvisitedNeighbor(MazeCell cell)
+    {
+        var unvisited = GetUnvisitedNeighbors(cell);
+        if (unvisited.Count == 0) return null;
+        return unvisited[Random.Range(0, unvisited.Count)];
+    }
+
+    List<MazeCell> GetUnvisitedNeighbors(MazeCell cell)
+    { 
+        List<MazeCell> neighbors = new List<MazeCell>();
+        int x = cell.gridX;
+        int z = cell.gridZ;
+
+        if (x > 0 && !cavegrid[x - 1, z].Visited)
         {
-            var unvisited = GetUnvisitedNeighbors(cell);
-            if (unvisited.Count == 0) return null;
-            return unvisited[Random.Range(0, unvisited.Count)];
+            neighbors.Add(cavegrid[x - 1, z]);
         }
-
-        List<MazeCell> GetUnvisitedNeighbors(MazeCell cell)
+        if (x < xsize - 1 && !cavegrid[x + 1, z].Visited)
+        { 
+            neighbors.Add(cavegrid[x + 1, z]);
+        }
+        if (z > 0 && !cavegrid[x, z - 1].Visited)
         {
-            List<MazeCell> neighbors = new List<MazeCell>();
-            int x = cell.gridX;
-            int z = cell.gridZ;
-
-            if (x > 0 && !cavegrid[x - 1, z].Visited)
-                neighbors.Add(cavegrid[x - 1, z]);
-            if (x < xsize - 1 && !cavegrid[x + 1, z].Visited)
-                neighbors.Add(cavegrid[x + 1, z]);
-            if (z > 0 && !cavegrid[x, z - 1].Visited)
-                neighbors.Add(cavegrid[x, z - 1]);
-            if (z < zsize - 1 && !cavegrid[x, z + 1].Visited)
-                neighbors.Add(cavegrid[x, z + 1]);
+            neighbors.Add(cavegrid[x, z - 1]);
+        }
+        if (z < zsize - 1 && !cavegrid[x, z + 1].Visited)
+        {
+            neighbors.Add(cavegrid[x, z + 1]);
+        }
 
             return neighbors;
         }
